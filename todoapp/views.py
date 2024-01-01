@@ -5,22 +5,16 @@ from .models import Todo
 
 def home(request):
     todos = Todo.objects.all()
-    # return HttpResponse('Welcmoe to the app.')
     content = {'todos': todos}
     return render(request, 'index.html', context = content)
 
 
 def create(request):
-    # 1. to get data from frontend after user post method
     if request.method == "POST":
         name = request.POST.get('name')
         description = request.POST.get('description')
         status = request.POST.get('status')
-        # 2. query to create data in db
         Todo.objects.create(name=name, description=description, status=status)
-        # Todo.objects.create(name2=name, description2=description, status2=status)
-        # name2 = name ===> yesma key(name2) chai model ma j cha tei hunu parcha i.e for database
-                    #  ===> and value (name) is the variable after the POST function inside create function
         return redirect('home')
     content = {'mode':'create'}
     return render(request, 'create.html', context=content)
